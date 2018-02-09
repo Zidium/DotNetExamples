@@ -1,0 +1,48 @@
+﻿@using Zidium.Examples.Models;
+@model ErrorModel
+
+@{
+    ViewBag.Title = "Произошла ошибка";
+}
+
+<style>
+    .error-value{
+        font-weight: normal;
+    }
+    .error-property{
+        font-weight: bold;
+    }
+    .alert{
+        margin-top: 20px !important;
+    } 
+    #error-table{
+        margin-top: 20px;
+    }
+    #error-table td{
+        padding: 0px 10px;
+        vertical-align: top;
+    }
+</style>
+
+<div class="alert alert-danger">
+    <p style="font-size: 18px;">К сожалению, произошла ошибка...</p> 
+    <table id="error-table">
+        <tr>
+            <td>
+                <p class="error-value">Код&nbsp;ошибки: </p>
+            </td>
+            <td>
+                <p class="error-property">@Model.ErrorCode</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="error-value">Сообщение: </p>
+            </td>
+            <td>
+                <p class="error-value">@Model.Exception.Message</p>
+            </td>
+        </tr>
+    </table>     
+</div>
+

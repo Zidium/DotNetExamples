@@ -1,0 +1,37 @@
+﻿@model Zidium.Examples.Models.ConnectionTestModel
+
+@{
+    ViewBag.Title = "Проверка соединения";
+}
+
+<style>
+    .header {
+        font-weight: bold;
+    }
+</style>
+
+<h1>@ViewBag.Title</h1>
+
+@if (Model.ZidiumComponentIsFake)
+{
+    <div class="alert alert-danger">Ошибка установки соединения с Zidium</div>
+}
+else
+{
+    <div class="alert alert-success">Соединение с Zidium успешно установлено</div>
+    <p>ID компонента: @Model.ComponentId</p>
+    <hr />
+
+    <p class="header">Результат выполнения эхо-запроса</p>
+
+    if (Model.IsResponseSuccess)
+    {
+        <p class="text-success">Запрос успешно выполнен</p>
+    }
+    else
+    {
+        <p class="text-danger">Запрос выполнен с ошибкой.</p>
+        <p>Код ошибки: @Model.ResponseCode</p>
+        <p>Сообщение ошибки: @Model.ResponseErrorMessage</p>
+    }
+}

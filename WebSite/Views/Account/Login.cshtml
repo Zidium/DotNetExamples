@@ -1,0 +1,53 @@
+﻿@using Zidium.Examples.Models;
+@model LoginModel
+@{
+    ViewBag.Title = "Вход";
+}
+<legend>@ViewBag.Title</legend>
+<div class="alert alert-info">
+    Введите любой логин и пароль "1", чтобы войти в систему.
+</div>
+<section id="loginForm">
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-3">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", style = "max-width: 300px" })
+            </div>
+            <div class="col-md-7">
+                @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-3">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", style = "max-width: 300px" })
+            </div>
+            <div class="col-md-6">
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.DisplayNameFor(m => m.RememberMe)
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Вход" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

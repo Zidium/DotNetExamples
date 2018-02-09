@@ -1,0 +1,220 @@
+﻿@model Zidium.Examples.Models.HomeModel
+
+@{
+    ViewBag.Title = "Пример мониторинга приложения ASP.NET MVC";
+}                                      
+
+<style>
+    .monitoring-description li {
+        font-size: 18px;
+        font-weight: normal;
+        margin-top: 20px;
+    }
+
+    .details {
+        font-weight: normal;
+        font-size: 14px;
+    }
+</style>
+
+<h1>@ViewBag.Title</h1>
+
+@if (Model.ZidiumComponentIsFake)
+{
+    <div class="alert alert-danger">
+        Нет соединения с Zidium.
+        @Html.ActionLink("Проверка соединения", "ConnectionTest")
+    </div>
+}
+else
+{
+    <div class="alert alert-success">
+        Соединение с Zidium успешно установлено.
+        @Html.ActionLink("Проверка соединения", "ConnectionTest")
+    </div>
+}
+<div class="monitoring-description">
+    <p>В данном приложении представлены примеры использования связки NLog + Zidium для выполнения мониторинга приложения ASP.NET MVC.</p>
+    <p>Для типового веб-приложения выполните следующие действия:</p>
+    <ol>
+        <li>
+            <p>Обработка исключений</p>
+            <div class="details">
+                <p>
+                    <a href="http://zidium.net/wiki/usage-examples/dot-net/monitoring-asp-net-mvc/exception-handling">
+                        Описание примера на сайте Zidium
+                    </a>
+                </p>
+                <p><b>Цель</b> &mdash; оперативно узнавать об ошибках и исправлять их.</p>
+                <p>
+                    <b>Как это работает?</b>
+                    <br />
+                    Когда случится необработанное исключение, приложение запишет его в NLog, а адаптер ошибок (Zidium.Errors) сообщит об этом Zidium.
+                    Zidium установит компоненту WebSite статус Warning, компонент будет жёлтого цвета.<br />
+                    Все случившиеся ошибки за выбранный интервал можно посмотреть на странице <b>Ошибки</b>.
+                </p>
+                <p>
+                    <b>Где исходные коды?</b>
+                    <br />
+                    Реализовано в Global.asax в методе Application_Error.
+                </p>
+                <p>
+                    <b>Как проверить?</b><br />
+                    Чтобы создать необработанное исключение, выполните
+                    <a href="@Url.Action("Sample1", "Errors")">/Errors/Sample1</a>
+                    или
+                    <a href="@Url.Action("Sample2", "Errors")">/Errors/Sample2</a>
+                    <br />
+                    А чтобы создать обработанное исключение &mdash; <a href="@Url.Action("Sample3", "Errors")">/Errors/Sample3</a>
+                </p>                
+            </div>
+        </li>
+        <li>
+            <p>Проверка главной страницы сайта</p>
+            <div class="details">
+                <p>
+                    <a href="http://zidium.net/wiki/usage-examples/dot-net/monitoring-asp-net-mvc/main-page-unit-test">
+                        Описание примера на сайте Zidium
+                    </a>
+                </p>     
+                <p>
+                    <b>Цель</b> &mdash; раз в N минут проверять, что главная страница сайта успешно открывается, 
+                    в случае ошибки получить уведомление. 
+                </p> 
+                <p>
+                    <b>Как это работает?</b>
+                    <br />
+                    Чтобы периодически выполнять проверку главной страницы сайта,
+                    нужно настроить проверку HTTP в личном кабинете Zidium,
+                    ничего программировать не нужно.
+                </p>         
+            </div>
+        </li>
+        <li>
+            <p>Проверка срока оплаты доменного имени сайта</p>
+            <div class="details">
+                <p>
+                    <a href="http://zidium.net/wiki/usage-examples/dot-net/monitoring-asp-net-mvc/domain-unit-test">
+                        Описание примера на сайте Zidium
+                    </a>
+                </p>
+                <p>
+                    <b>Цель</b> &mdash; раз в день проверять срок оплаты доменного имени сайта.
+                    Если до окончания срока осталось мало дней, отправлять уведомление.
+                </p> 
+                <p>
+                    <b>Как это работает?</b>
+                    <br />
+                    Чтобы периодически выполнять проверку срока оплаты доменного имени,
+                    нужно настроить проверку Domain в личном кабинете Zidium,
+                    ничего программировать не нужно.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p>Проверка срока годности SSL-сертификата сайта</p>
+            <div class="details">
+                <p>
+                    <a href="http://zidium.net/wiki/usage-examples/dot-net/monitoring-asp-net-mvc/ssl-unit-test">
+                        Описание примера на сайте Zidium
+                    </a>
+                </p>
+                <p>
+                    <b>Цель</b> &mdash; раз в день проверять срок годности ssl-сертификата сайта.
+                    Если до окончания срока осталось мало дней, отправлять уведомление.
+                </p>
+                <p>
+                    <b>Как это работает?</b>
+                    <br />
+                    Чтобы периодически выполнять проверку срока годности ssl-сертификата сайта,
+                    нужно настроить проверку SSL в личном кабинете Zidium,
+                    ничего программировать не нужно.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p>Страница самопроверки</p>            
+            <div class="details">
+                <p>
+                    <a href="http://zidium.net/wiki/usage-examples/dot-net/monitoring-asp-net-mvc/selftest">
+                        Описание примера на сайте Zidium
+                    </a>
+                </p>
+                <p><b>Цель</b> &mdash; раз в 5 минут приложение должно проверить само себя, что всё в порядке, нет никаких проблем.</p>
+                <p>
+                    <b>Как это работает?</b>
+                    <br />
+                    В Zidium для компонента WebSite нужно создать системную проверку HTTP, 
+                    которая будет проверять, что страница самопроверки выполняется без ошибок 
+                    (страница содержит фрагмент текста: ###### SUCCESS ######).
+                    Если проверка выполнится с ошибкой, Zidium установит компоненту WebSite статус Alarm. 
+                    Вы получите уведомление.
+                </p>
+                <p>
+                    <b>Где исходные коды?</b>
+                    <br />
+                    Реализовано на странице 
+                    <a href="@Url.Action("Index", "SelfTest")">/SelfTest</a>
+                </p>               
+            </div>
+        </li>
+        <li>            
+            <p>Лог</p>
+            <div class="details">
+                <p>
+                    <a href="http://zidium.net/wiki/usage-examples/dot-net/monitoring-asp-net-mvc/log">
+                        Описание примера на сайте Zidium
+                    </a>
+                </p>               
+                <p>
+                    <b>Цель</b> &mdash; записывать логи не только в текстовый файл NLog, 
+                    но и в систему мониторинга Zidium, чтобы было удобно читать логи в личном кабинете.
+                </p>  
+                <p>
+                    <b>Как это работает?</b>
+                    <br />
+                    Подключите к NLog адаптер для Zidium (Zidium.Log).
+                    Отправляйте логи через NLog, как обычно.
+                    <br />
+                    Если подключить ещё и адаптер ошибок (Zidium.Errors), то для записей лога с важностью от Warning и выше в Zidium
+                    будут создаваться события-ошибки, с которыми потом можно будет работать как в дефектами во встроенном баг-трекере.
+                </p>              
+                <p>
+                    <b>Где исходные коды?</b>
+                    <br />
+                    Запись логов реализована на страницах
+                    <a href="@Url.Action("SimpleExample", "Log")">/Log/SimpleExample</a>, 
+                    <a href="@Url.Action("PropertiesExample", "Log")">/Log/PropertiesExample</a>, 
+                    <a href="@Url.Action("ContextExample", "Log")">/Log/ContextExample</a>
+                </p>
+            </div>
+        </li>
+        <li>
+            <p>События</p>
+            <div class="details">
+                <p>
+                    <a href="http://zidium.net/wiki/usage-examples/dot-net/monitoring-asp-net-mvc/events">
+                        Описание примера на сайте Zidium
+                    </a>
+                </p>
+                <p>
+                    <b>Цель</b> &mdash; информационная, чтобы знать, когда что происходит.
+                </p>
+                <p>
+                    <b>Как это работает?</b>
+                    <br />
+                    В отличие от логов, события имеют тип и умеют склеиваться. 
+                    Тип события помогает искать одинаковые события. 
+                    Благодаря склейке событий удобно видеть как некоторое явление длилось во времени.
+                </p>
+                <p>
+                    <b>Где исходные коды?</b>
+                    <br />
+                    Событие "Пользователь на сайте" реализовано в ControllerBase в методе OnActionExecuting.
+                </p>
+            </div>
+        </li>               
+    </ol>
+</div>
+
+

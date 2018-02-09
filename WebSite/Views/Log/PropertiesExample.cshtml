@@ -1,0 +1,27 @@
+﻿@model Zidium.Examples.Models.LogModel
+
+@{
+    ViewBag.Title = "Пример сообщения лога с расширенными свойствами";
+}
+
+<h1>@ViewBag.Title.</h1>
+
+<p>Страница записала одну строку лога, в которой есть расширенные свойства.</p>
+
+<p>
+    Расширенные свойства лога удобно смотреть в личном кабинете.
+    По умолчанию расширенные свойства не показываются, но если кликнуть по сообщению лога, то они будут видны.
+</p>
+
+@if (Model.ZidiumComponentIsFake)
+{
+    <p class="alert alert-danger">
+        Нет связи с системой мониторинга. @Html.ActionLink("Проверьте соединение", "ConnectionTest", "Home")
+    </p>
+}
+else
+{
+    <p>
+        <a href="http://@(Model.AccountName).lk.zidium.net/Logs?ComponentId=@Model.ComponentId">Посмотреть веб-лог в личном кабинете</a>
+    </p>
+}

@@ -1,0 +1,22 @@
+﻿@model Zidium.Examples.Models.LogModel
+
+@{
+    ViewBag.Title = "Простой пример записи логов";
+}
+
+<h1>@ViewBag.Title.</h1>
+
+<p>Страница записала 6 простых строк лога. Запись выполняется в веб-лог.</p>
+
+@if (Model.ZidiumComponentIsFake)
+{
+    <p class="alert alert-danger">
+        Нет связи с системой мониторинга. @Html.ActionLink("Проверьте соединение", "ConnectionTest", "Home")
+    </p>
+}
+else
+{
+    <p>
+        <a href="http://@(Model.AccountName).lk.zidium.net/Logs?ComponentId=@Model.ComponentId">Посмотреть веб-лог в личном кабинете</a>
+    </p>
+}
